@@ -1,0 +1,21 @@
+apply plugin: 'java'
+
+ext.jerseyVersion='2.25.1'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+    compile "org.glassfish.jersey.core:jersey-client:${jerseyVersion}"
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "JerseyClient"
+    }
+ 
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
