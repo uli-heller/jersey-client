@@ -147,3 +147,39 @@ Caused by: java.net.SocketException: Unexpected end of file from server
 ```
 
 Man kann zweifelsfrei erkennen, dass ein Jersey-Client im Einsatz ist!
+
+Ausnahme bei HTTP-Proxy
+------------------------
+
+### Fenster-1: Dummy-Proxy
+
+```
+nc -l 8888
+```
+
+### Fenster-2: Abfrage
+
+```
+java -Dhttp.nonProxyHosts="heute.de|*daemons-point.com|tagesschau.de" -Dhttp.proxyHost=localhost -Dhttp.proxyPort=8888 -jar build/libs/jersey-client.jar http://internal.daemons-point.com
+```
+
+Es erfolgt **keine** Ausgabe in Fenster-1, stattdessen erscheint in Fenster-2 die HTTPS-Antwort!
+
+Ausnahme bei HTTPS-Proxy
+------------------------
+
+### Fenster-1: Dummy-Proxy
+
+```
+nc -l 8888
+```
+
+### Fenster-2: Abfrage
+
+```
+java -Dhttp.nonProxyHosts="heute.de|*daemons-point.com|tagesschau.de" -Dhttps.proxyHost=localhost -Dhttps.proxyPort=8888 -jar build/libs/jersey-client.jar https://internal.daemons-point.com
+```
+
+Es erfolgt **keine** Ausgabe in Fenster-1, stattdessen erscheint in Fenster-2 die HTTPS-Antwort!
+Der erste Parameter lautet `-Dhttp.nonProxyHosts=...`. Mit `-Dhttps.nonProxyHosts=...` funktioniert
+es nicht!
