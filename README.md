@@ -1,6 +1,13 @@
 JERSEY-CLIENT
 =============
 
+TLDR
+----
+
+Die Verwendung vom Jersey-Client ist sehr simpel.
+Mittels Standard-Java-Mechanismen kann der Jersey-Client
+zur Verwendung von Proxy-Servern überredet werden.
+
 Bauen
 -----
 
